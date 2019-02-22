@@ -12,36 +12,38 @@ public  class  KnightBoard{
      }
    }
  }
- private boolean solveH(int row,int col,int moveNumber) {
- System.out.println(moveNumber);
-   System.out.println("this is row:"+ row + "this is col:" + col);
-
+ public boolean solve(int row,int col,int number,int product) {
    if(row<0 || col<0) {
     return false;
   }
-  else if(row>=board.length || col>=board[0].length) {
+  else if(row>=board.length|| col>=board[0].length) {
     return false;
   }
-  else if(moveNumber==board.length* board[0].length) {
-   // System.out.println("this is row:"+ row + "this is col:" + col);
-    board[row][col]=moveNumber;;
-    System.out.println(board.length* board[0].length);
-    return true;
+  else if(board[row][col]!=0) {
+    return false;
   }
-  board[row][col]=moveNumber;
-  if(solveH(row+2,col+1,moveNumber+1)||
-   solveH(row-2,col+1,moveNumber+1)||
-   solveH(row+2,col-1,moveNumber+1)||
-   solveH(row+1,col+2,moveNumber+1)||
-   solveH(row-1,col+2,moveNumber+1)||
-   solveH(row-2,col-1,moveNumber+1)||
-   solveH(row+1,col-2,moveNumber+1)||
-   solveH(row-1,col-2,moveNumber+1)) {
+   board[row][col]=number;
+   
+   if(number==product) {
+      return true;
+  }		  if(   solve(row+2,col+1,number+1,product)||
+         solve(row-2,col+1,number+1,product)||
+         solve(row+2,col-1,number+1,product)||
+         solve(row+1,col+2,number+1,product)||
+         solve(row-1,col+2,number+1,product)||
+         solve(row-2,col-1,number+1,product)||
+         solve(row+1,col-2,number+1,product)||
+         solve(row-1,col-2,number+1,product)) {
 
-   return true;
-  }
-  return false;
+                return true;                           }
+
+       board[row][col]=0;
+       return false;
+
+
+
 }
+
  public String toString(){
    String result=Arrays.deepToString(board);
    return result;
