@@ -109,7 +109,7 @@ public int[][]solveSteps(int row,int col){
 
 
  }
- public boolean solve(int row,int col) {
+ public boolean Wsolve(int row,int col) {
 	 return solve(row,col,1,board.length*board[0].length);
  }
 public boolean fastSolve(int row,int col,int number,int product) {
@@ -134,9 +134,10 @@ public boolean fastSolve(int row,int col,int number,int product) {
 	board[row][col]=0;
 	return false;
 }
-public boolean fastSolve(int row,int col) {
+public boolean solve(int row,int col) {
 	return fastSolve(row,col,1,board.length*board[0].length);
 }
+
 
  public String toString(){
 
@@ -157,11 +158,39 @@ public boolean fastSolve(int row,int col) {
    }
    return result;
  }
+ public int countSolutions(int row, int col,int number,int product) {
+
+	 if(number==product) {
+			board[row][col]=number;
+			board[row][col]=0;
+			return 1;
+		}
+		board[row][col]=number;
+		int[][]data=solveSteps(row,col);
+		if (data.length==0) {
+			board[row][col]=0;
+			return 0;
+		}
+		int count=0;
+		for(int i=0;i<data.length;i++) {
+			//System.out.println(toString());
+			count+=countSolutions(data[i][0],data[i][1],number+1,product);
+
+		}
+		board[row][col]=0;
+		return count;
+ }
+ public int countSolutions(int row, int col) {
+	 return countSolutions(row,col,1,board.length*board[0].length);
+ }
 
  public static void main(String[]args) {
-  KnightBoard chess=new KnightBoard(92,93);
-  System.out.println(chess.fastSolve(0,0));
+  KnightBoard chess=new KnightBoard(5,5);
+  System.out.println(chess.countSolutions(0,0));
   System.out.println(chess);
+  KnightBoard chess2=new KnightBoard(90,90);
+  System.out.println(chess2.solve(0,0));
+  System.out.println(chess2);
 
  }
 }
