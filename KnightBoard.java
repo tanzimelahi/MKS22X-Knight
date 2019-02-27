@@ -16,12 +16,9 @@ public  class  KnightBoard{
      }
    }
  }
- public String toString(){
-   String result=Arrays.deepToString(board);
-   return result;
- }
 
- public int countMoves(int row,int col) {
+
+ public int countMoves(int row,int col) {// checks if the eight possible moves work
 	 if(row>=board.length|| col>=board[0].length|| row<0|| col<0) {
 		 return -1;
 	 }
@@ -142,7 +139,7 @@ public  class  KnightBoard{
 
 		 }
 	 }
-	 System.out.println(data);
+	 //System.out.println(data);
 
 	 return coords;
 
@@ -164,7 +161,7 @@ public  class  KnightBoard{
 		 return false;
 	 }
 	  board[row][col]=number;
-	  System.out.println("row:"+row+"col: "+col+"num: "+number+Arrays.deepToString(board));
+	  //System.out.println("row:"+row+"col: "+col+"num: "+number+Arrays.deepToString(board));
 	  if(number==product) {
 			 return true;
 	 }		  if(   solve(row+2,col+1,number+1,product)||
@@ -185,7 +182,7 @@ public  class  KnightBoard{
 
  }
  public boolean fastSolve(int row,int col,int number,int product){
-	 System.out.println(product);
+	 //System.out.println(product);
 		  if(row<0 || col<0) {
 			 return false;
 		 }
@@ -193,17 +190,17 @@ public  class  KnightBoard{
 			 return false;
 		 }
 		 else if(board[row][col]!=0) {
-			 if(board[row][col]<0) {
-				 throw new IllegalStateException();
-			 }
+
 			 return false;
 		 }
 		  board[row][col]=number;
-		  System.out.println("row:"+row+"col: "+col+"num: "+number+Arrays.deepToString(board));
+		 /// System.out.println(this.toString());
 		  if(number==product) {
+
 				 return true;
 		 }
 		  int[][]data=superCountMoves(row,col);
+
 		  for(int i=0;i<data.length;i++) {
 			  if(fastSolve(data[i][0],data[i][1],number+1,product)) {
 				  return true;
@@ -213,14 +210,31 @@ public  class  KnightBoard{
 	board[row][col]=0;
 	return false;
  }
+ public String toString(){
+
+   String result="";
+   for(int i=0;i<board.length;i++){
+     for(int j=0;j<board[0].length;j++){
+       result+=board[i][j]+" ";
+     }
+     result+="\n";
+   }
+   return result;
+ }
+
 
 
  public static void main(String[]args) {
-	 KnightBoard test=new KnightBoard(5,6);
-	 KnightBoard test2=new KnightBoard(3,4);
-	System.out.println(test.fastSolve(2,2,1,30
+	 KnightBoard test=new KnightBoard(50,50);
 
-			));
+	 System.out.println(test.fastSolve(0,0,1,49));
+   System.out.println(test);
+
+
+
+//	System.out.println(test.fastSolve(2,2,1,30
+
+
 
 
 
