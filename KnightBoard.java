@@ -1,6 +1,4 @@
 
-
-
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +38,7 @@ private int[][] ListMoves(int row,int col){ // method checked and works
     answer[7][1]=col-2;
     return answer;
 }
-public int  countMoves(int row,int col) {   // works like a charm, throughly tested
+private int  countMoves(int row,int col) {   // works like a charm, throughly tested
 	if(row>=board.length|| col>=board[0].length || row<0 || col<0|| board[row][col]!=0) {
 		return -1;
 	}
@@ -54,7 +52,7 @@ public int  countMoves(int row,int col) {   // works like a charm, throughly tes
 	}
 	return count;
 }
-public int[][]solveSteps(int row,int col){
+private int[][]solveSteps(int row,int col){
 	 int[][]data=ListMoves(row,col);
 	 ArrayList<Integer>Moves=new ArrayList<Integer>();
 	 for(int i=0;i<data.length;i++) {
@@ -78,7 +76,7 @@ public int[][]solveSteps(int row,int col){
 
 }
 
- public boolean solve(int row,int col,int number,int product) {
+ private boolean solve(int row,int col,int number,int product) {
 	  if(row<0 || col<0) {
 		 return false;
 	 }
@@ -109,10 +107,10 @@ public int[][]solveSteps(int row,int col){
 
 
  }
- public boolean Wsolve(int row,int col) {
+ private boolean Wsolve(int row,int col) {
 	 return solve(row,col,1,board.length*board[0].length);
  }
-public boolean fastSolve(int row,int col,int number,int product) {
+private boolean fastSolve(int row,int col,int number,int product) {
 
 	if(number==product) {
 		board[row][col]=number;
@@ -134,7 +132,19 @@ public boolean fastSolve(int row,int col,int number,int product) {
 	board[row][col]=0;
 	return false;
 }
+//@throws IllegalStateException when the board contains non-zero values.
+//@throws IllegalArgumentException when either parameter is negative
 public boolean solve(int row,int col) {
+	if(row<0 || col<0 || row>=board.length|| col>=board[0].length) {
+		throw new IllegalArgumentException();
+	}
+	for(int i=0;i<board.length;i++) {
+		for(int j=0;j<board[0].length;j++) {
+			if(board[i][j]<0) {
+				throw new IllegalStateException();
+			}
+		}
+	}
 	return fastSolve(row,col,1,board.length*board[0].length);
 }
 
@@ -148,9 +158,13 @@ public boolean solve(int row,int col) {
 
        result+=board[i][j]+" ";
        }
-       else {
-    	result+=" "+board[i][j]+" "
+       else if(board[i][j]==0){
+    	result+=" "+"_"+" "
     			+ "";
+       }
+       else {
+    	   result+=" "+board[i][j]+" "
+       			+ "";
        }
      }
      result+="\n";
@@ -158,7 +172,7 @@ public boolean solve(int row,int col) {
    }
    return result;
  }
- public int countSolutions(int row, int col,int number,int product) {
+ private int countSolutions(int row, int col,int number,int product) {
 
 	 if(number==product) {
 			board[row][col]=number;
@@ -181,16 +195,18 @@ public boolean solve(int row,int col) {
 		return count;
  }
  public int countSolutions(int row, int col) {
+		if(row<0 || col<0 || row>=board.length|| col>=board[0].length) {
+			throw new IllegalArgumentException();
+		}
+		for(int i=0;i<board.length;i++) {
+			for(int j=0;j<board[0].length;j++) {
+				if(board[i][j]<0) {
+					throw new IllegalStateException();
+				}
+			}
+		}
 	 return countSolutions(row,col,1,board.length*board[0].length);
  }
 
- public static void main(String[]args) {
-  KnightBoard chess=new KnightBoard(5,5);
-  System.out.println(chess.countSolutions(0,0));
-  System.out.println(chess);
-  KnightBoard chess2=new KnightBoard(90,90);
-  System.out.println(chess2.solve(0,0));
-  System.out.println(chess2);
 
- }
 }
